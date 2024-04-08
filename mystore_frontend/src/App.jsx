@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Form, Button } from "react-bootstrap";
 import './App.css'
+import CategoriesList from './CategoriesList'; 
 import superstoreimg from './superstore.png';
 
 export const App = () => {
@@ -8,12 +9,17 @@ export const App = () => {
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
+
+  const loadCategories = () => {
     fetch("http://localhost:4000/categories/")
       .then(response => response.json())
       .then(data => setCategories(data))
       .catch(error => console.error("Error fetching categories:", error));
-  }, []); 
+  };
+
+  useEffect(() => {
+    loadCategories(); 
+  }, []);
 
 
   const handleSubmit = (event) => {
@@ -28,8 +34,7 @@ export const App = () => {
       .then((response) => response.json())
       .then((data) => {
 
-          console.log(data)
-          setCategories([...categories, data]);
+        loadCategories(); 
 
       });
 
@@ -39,17 +44,12 @@ export const App = () => {
     <div className="App">
       <img src={superstoreimg} alt="Super Store" className="imagen" />
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1, marginRight: '20px' }}>
-          <h2>Categories</h2>
-          <ul>
-            {categories.map((category, index) => (
-              <li key={index}>{category.name}</li>
-            ))}
-          </ul>
+      <div>
+        <div>
+          <CategoriesList style={{ marginTop: '20px' }} categories={categories} />
         </div>
 
-        <div style={{ flex: 1 }}>
+        <div>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formName">
               <Form.Label>Name</Form.Label>

@@ -56,3 +56,21 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #3e8e41;
 }
+
+.App {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+  padding: 20px;
+}
+
+.App > div {
+  margin: 0 10px; 
+  flex-basis: 50%; 
+}
+
+table {
+  width: auto;
+  margin: 0 auto; 
+}
+
